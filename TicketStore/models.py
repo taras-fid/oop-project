@@ -1,22 +1,21 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator, DecimalValidator
+
+import performance.models
 
 
 class Ticket(models.Model):
-    price = models.PositiveIntegerField(
-        default=10,
+    price = models.DecimalField(
         validators=[
-            MaxValueValidator(100),
-            MinValueValidator(1)
+            MinValueValidator(0.01),
+            DecimalValidator(decimal_places=2)
         ]
      )
     place = models.PositiveIntegerField(
-        default=1,
         validators=[
-            MaxValueValidator(150),
             MinValueValidator(1)
         ]
      )
     availability = models.BooleanField()
-    poster_id = models.ForeignKey(Poster, on_delete=models.CASCADE)
-    tier_id = models.ForeignKey(Tier, on_delete=models.CASCADE)
+    poster_id = models.ForeignKey(performance.models.Poster, on_delete=models.CASCADE)
+    tier_id = models.ForeignKey(performance.models.Tier, on_delete=models.CASCADE)
