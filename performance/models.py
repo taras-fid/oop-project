@@ -13,16 +13,18 @@ class Rating(models.Model):
 
 class Performance(models.Model):
     name = models.CharField(max_length=64)
-    rating = models.ForeignKey(Rating, on_delete=models.SET_NULL)
+    rating_id = models.ForeignKey(Rating, on_delete=models.SET_NULL)
     description = models.TextField
     author = models.CharField(max_length=64)
     duration = models.DurationField()
-    genre = models.TextField(max_length=32)
+    genre_id = models.ForeignKey(Genre, on_delete=models.SET_NULL)
     price = models.DecimalField(validators=[
         validators.MinValueValidator(0.01),
         validators.DecimalValidator(decimal_places=2)
     ])
 
+class Genre(models.Model):
+    genre = models.TextField(max_length=32)
 
 class Hall(models.Model):
     number = models.CharField(max_length=32)
@@ -30,12 +32,12 @@ class Hall(models.Model):
 
 
 class Tier(models.Model):
-    hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    hall_id = models.ForeignKey(Hall, on_delete=models.CASCADE)
     level = models.IntegerField()
     number_of_seats = models.PositiveIntegerField()
 
 
 class Poster(models.Model):
-    performance = models.ForeignKey(Performance, on_delete=models.SET_NULL)
+    performance_id = models.ForeignKey(Performance, on_delete=models.SET_NULL)
     date = models.DateTimeField()
-    hall = models.ForeignKey(Hall, on_delete=models.SET_NULL)
+    hall_id = models.ForeignKey(Hall, on_delete=models.SET_NULL)

@@ -14,10 +14,15 @@ class Employee(models.Model):
                                                validators=[RegexValidator(regex='[А-Я]{2}\\d{7}$')])
     email = models.EmailField()
     address = models.CharField('Home address', max_length=50)
-    position = models.CharField('Work position', max_length=50)
     date_of_birth = models.DateField('Date of birth')
+
+class Hiring(models.Model):
+    employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    position_id = models.ForeignKey(Position, on_delete=models.SET_NULL)
     hiring_date = models.DateField('Hiring date')
 
+class Position(models.Model):
+    position = models.CharField('Work position', max_length=50)
 
 class Role(models.Model):
     employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
