@@ -1,6 +1,6 @@
+from django.core.validators import RegexValidator, MinValueValidator, DecimalValidator
 from django.db import models
 from phone_field import PhoneField
-from django.core.validators import RegexValidator, MinValueValidator, DecimalValidator
 
 import performance.models
 
@@ -12,26 +12,28 @@ class Employee(models.Model):
     phone = PhoneField('Phone number')
     work_book = models.PositiveBigIntegerField('Number of the work book',
                                                validators=[RegexValidator(regex='[А-Я]{2}\\d{7}$')])
-    email = models.EmailField()
+    email = models.EmailField('Email')
     address = models.CharField('Home address', max_length=50)
     date_of_birth = models.DateField('Date of birth')
 
-class Hiring(models.Model):
-    employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    position_id = models.ForeignKey(Position, on_delete=models.SET_NULL)
-    hiring_date = models.DateField('Hiring date')
 
 class Position(models.Model):
     position = models.CharField('Work position', max_length=50)
+
+
+class Hiring(models.Model):
+    employee_id = models.ForeignKey(Employee, null=True, on_delete=models.CASCADE)
+    position_id = models.ForeignKey(Position, null=True, on_delete=models.SET_NULL)
+    hiring_date = models.DateField('Hiring date')
+
 
 class Role(models.Model):
     employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
     poster_id = models.ForeignKey(performance.models.Poster, on_delete=models.CASCADE)
     name = models.CharField('Role name', max_length=30)
     fee = models.DecimalField(
-        'Fee per role',
+        'Fee per role', decimal_places=2, max_digits=20,
         validators=[
-            MinValueValidator(0.01),
-            DecimalValidator(decimal_places=2)
+            MinValueValidator(0.01)
         ]
     )

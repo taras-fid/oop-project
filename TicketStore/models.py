@@ -5,17 +5,16 @@ import performance.models
 
 
 class Ticket(models.Model):
-    price = models.DecimalField(
-        validators=[
-            MinValueValidator(0.01),
-            DecimalValidator(decimal_places=2)
-        ]
-     )
+    price = models.DecimalField('Ticket price', decimal_places=2, max_digits=10,
+                                validators=[
+                                    MinValueValidator(0.01),
+                                ]
+                                )
     place = models.PositiveIntegerField(
         validators=[
             MinValueValidator(1)
         ]
-     )
-    availability = models.BooleanField()
+    )
+    availability = models.BooleanField('Availability')
     poster_id = models.ForeignKey(performance.models.Poster, on_delete=models.CASCADE)
     tier_id = models.ForeignKey(performance.models.Tier, on_delete=models.CASCADE)

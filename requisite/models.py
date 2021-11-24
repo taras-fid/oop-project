@@ -2,7 +2,7 @@ from django.db import models
 
 import Employees.models
 import performance.models
-from django.core.validators import MinValueValidator, DecimalValidator
+from django.core.validators import MinValueValidator
 
 
 class RequisiteType(models.Model):
@@ -17,10 +17,9 @@ class Requisite(models.Model):
 class RequisiteHistory(models.Model):
     description = models.TextField('History of requisite')
     price = models.DecimalField(
-        'Price of requisite',
+        'Price of requisite', decimal_places=2, max_digits=30,
         validators=[
-            MinValueValidator(0.01),
-            DecimalValidator(decimal_places=2)
+            MinValueValidator(0.01)
         ]
     )
     requisite_id = models.ForeignKey(Requisite, on_delete=models.CASCADE)
