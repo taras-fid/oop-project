@@ -23,6 +23,9 @@ class Performance(models.Model):
         validators.MinValueValidator(0.01)
     ])
 
+    def __str__(self):
+        return f'Name: {self.name}\nDescription: {self.description}\nAuthor: {self.author}\nDuration: {self.duration}\n'
+
 
 class Hall(models.Model):
     number = models.CharField('Number of a hall', max_length=32)

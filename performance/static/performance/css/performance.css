@@ -1,0 +1,63 @@
+body {
+    background: white;
+}
+
+aside {
+    float: left;
+    background: #dce3fa;
+    width: 20%;
+    padding: 2.5%;
+    height: 100vh;
+    color: #000000;
+    border-right: 2px solid #78a8f5;
+}
+
+aside img {
+    width: 80px;
+    float: left;
+    transition: transform .6s ease;
+}
+
+aside img:hover {
+    color: #eb5959;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+aside h3 {
+    margin-top: 50px;
+    font-size: 30px;
+}
+
+aside ul {list-style: none}
+aside ul li {
+    color: black;
+    display: block;
+    margin-top: 20px;
+    transition: transform .6s ease;
+}
+
+aside ul li:hover, aside ul a:hover {
+    color: #eb5959;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+performance .features {
+    float: left;
+    color: black;
+    margin-top: 10px;
+    text-align: center;
+    width: 75%;
+}
+
+performance .features h1 {font-size: 50px;}
+performance .features p {max-width: 400px; margin: 20px auto;}
+
+.alert-warning {
+    float: left;
+    clear: both;
+    width: 400px;
+    margin: 20px 34%;
+    text-align: left;
+}

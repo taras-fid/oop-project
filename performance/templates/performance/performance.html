@@ -1,0 +1,18 @@
+{% extends 'performance/performance_layout.html' %}
+
+{% block title %}Performances{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Performances on going</h1>
+        {% for el in performances %}
+            <div class="alert alert-warning">
+                <h3>{{ el.name }}</h3>
+                <h5>Author: {{ el.author }}</h5>
+                <p>Description:{{ el.description }}</p>
+                <p>Duration: {{ el.duration }}</p>
+                <p>Price: {{ el.price }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
