@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import DeleteView
 from .models import Performance
 
 # Create your views here.
