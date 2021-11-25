@@ -8,4 +8,5 @@ urlpatterns = [
     path('performancesoon', views.performance_to_be, name='performancesoon'),
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),
+    path('search', views.Search.as_view, name='search'),
 ]
