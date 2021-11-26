@@ -23,6 +23,19 @@
             <a href="{%  url 'contact'  %}"><li><i class="fas fa-address-book"></i> Contact</li></a>
         </ul>
     </aside>
+    <div class="alert ticketStore-warning">
+        {% with total_tickets=ticketStore|length %}
+        {% if ticketStore|length > 0 %}
+        In ticketStore:
+        <a href=" {% url 'ticketStore:ticketStore_detail' %} ">
+            {{ total_tickets }} tickets, {{ ticketStore.get_total_price }} $
+        </a>
+        {% else %}
+        ticketStore empty
+        {% endif %}
+        {% endwith %}
+        <a href="{%  url 'ticketStore_main'  %}"><li><i class="fas fa-store"></i> go to store</li></a>
+    </div>
     <main>
         {% block content %}
         {% endblock %}

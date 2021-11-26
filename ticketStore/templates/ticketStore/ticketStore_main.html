@@ -1,0 +1,8 @@
+{% extends 'performance/performance_layout.html' %}
+
+{% block title %}TicketStore{% endblock %}
+
+{% block content %}
+    <h1>TicketStore</h1>
+    <a href="{% url 'ticketStore_hot' %}"><button class="btn btn-warning">Hot tickets</button></a>
+{% endblock %}
