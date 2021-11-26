@@ -16,12 +16,16 @@ class Performance(models.Model):
     name = models.CharField('Name', max_length=64)
     rating_id = models.ForeignKey(Rating, null=True, on_delete=models.SET_NULL)
     description = models.TextField('Description of performance')
+    # poster = models.ImageField("Постер", upload_to="performance/")
     author = models.CharField('Author', max_length=64)
     duration = models.DurationField('Duration of performance')
     genre_id = models.ForeignKey(Genre, null=True, on_delete=models.SET_NULL)
     price = models.DecimalField('Price', decimal_places=2, max_digits=10, validators=[
         validators.MinValueValidator(0.01)
     ])
+
+    def __str__(self):
+        return f'Name: {self.name}\nDescription: {self.description}\nAuthor: {self.author}\nDuration: {self.duration}\n'
 
 
 class Hall(models.Model):
