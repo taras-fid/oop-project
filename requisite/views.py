@@ -6,7 +6,7 @@ def main(request):
 
 def requisite(request):
     output = Requisite.objects.all()
-    return render(request, 'Requisite/requisite.html', output)
+    return render(request, 'Requisite/requisite.html', {'requisite': output})
 
 
 def requisite_history(request):

@@ -1,1 +1,16 @@
 {%extends 'D:\GitHub\oop-project\main\templates\base.html'%}
+
+{% block title %}Requisite list{% endblock %}
+
+{% block header %}<a href="{% url 'req_home' %}">Requisite list</a>{% endblock %}
+
+{% block content %}
+<h4>Requisite list</h4>
+<p>
+    {% for el in requisite %}
+    <div class="mt-2">
+        <p><mark>{{el.id}}. {{el.name}}</mark></p>
+    </div>
+    {% endfor %}
+</p>
+{% endblock %}
