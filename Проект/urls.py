@@ -9,6 +9,6 @@ urlpatterns = [
     path('performances/', include('performance.urls')),
     path('ticketStore/', include('ticketStore.urls')),
     path('', include('main.urls')),
-    path('requisite/', views.index),
+    path('requisite/', include('requisite.urls')),
     path('employees/', views.employees)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

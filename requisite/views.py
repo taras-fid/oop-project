@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from .models import Requisite, RequisiteHistory, RequisitePosterRole
 
-
-def index(request):
-    return render(request, 'Employees/index.html')
-
+def main(request):
+    return render(request, "Requisite/main.html")
 
 def requisite(request):
     output = Requisite.objects.all()
