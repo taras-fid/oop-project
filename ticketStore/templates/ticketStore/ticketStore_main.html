@@ -1,8 +1,22 @@
 {% extends 'performance/performance_layout.html' %}
 
-{% block title %}TicketStore{% endblock %}
+{% block title %}Performances{% endblock %}
 
 {% block content %}
-    <h1>TicketStore</h1>
-    <a href="{% url 'ticketStore_hot' %}"><button class="btn btn-warning">Hot tickets</button></a>
+    <div class="features">
+        <h2>{{ search_message }}</h2>
+        {% if performances %}
+            {% for el in performances %}
+                <div class="alert alert-warning">
+                    <h3>{{ el.name }}</h3>
+                    <h5>Author: {{ el.author }}</h5>
+                    <p>Description:{{ el.description }}</p>
+                    <p>Duration: {{ el.duration }}</p>
+                    <p>Price: {{ el.price }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>no performances yet</p>
+        {% endif %}
+    </div>
 {% endblock %}

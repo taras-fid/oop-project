@@ -11,9 +11,13 @@ from django.views.generic.base import View
 # Create your views here.
 
 
-# TODO доделать хтмл и мозг для корзины(пока что сырой мозги пустая форма)
 def ticketStore_main(request):
-    return render(request, "ticketStore/ticketStore_main.html")
+    tickets = Ticket.objects.order_by('availability', 'place')
+    # for el in tickets:
+    #     if not int(el.place) % 10:
+    #         i = 0
+    data = {'tickets': tickets}
+    return render(request, 'ticketStore/ticketStore_main.html', context=data)
 
 
 def ticketStore_add(request):
@@ -25,4 +29,13 @@ def ticketStore_delete(request):
 
 
 def ticketStore_hot(request):
-    return render(request, "ticketStore/ticketStore_hot.html")
+    return render(request, 'ticketStore/ticketStore_hot.html')
+
+
+def ticketStore_1(request):
+    tickets = Ticket.objects.order_by('availability', 'place')
+    # for el in tickets:
+    #     if not int(el.place) % 10:
+    #         i = 0
+    data = {'tickets': tickets}
+    return render(request, 'ticketStore/ticketStore_1.html', context=data)

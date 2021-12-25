@@ -1,0 +1,59 @@
+{% extends 'performance/performance_layout.html' %}
+
+{% block title %}TicketStore{% endblock %}
+
+{% block content %}
+    <h1>TicketStore <a href="{% url 'ticketStore_hot' %}"><button class="btn btn-warning">Hot tickets</button></a></h1>
+    <br>
+    <style>
+        p {
+            color: black;
+            display: block;
+            float: left;
+            clear: both;
+            width: 20px;
+            margin: 20px 34%;
+            text-align: left;
+        }
+        .button {
+            background-color: #4CAF50; /* Green */
+            color: black;
+            display: block;
+            float: centre;
+            clear: both;
+            width: 40px;
+            margin: 20px 34%;
+            text-align: left;
+        }
+        .btn-not-availability {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .yellow {background-color: #9ACD32;}
+        .green {background-color: #4CAF50;}
+        .blue {background-color: #008CBA;}
+    </style>
+        {% if tickets %}
+            {% for el in tickets %}
+                {% if not el.availability %}
+                    <button class="button btn-not-availability">{{ el.place }}</button>
+                {% else %}
+                    <button class="button yellow">{{ el.place }}</button>
+                {% endif %}
+                {% if el.place == 10 %}
+                    <br><br>
+                {% endif %}
+                {% if el.place == 10 %}
+                    <button class="button green">{{ el.place }}</button>
+                {% endif %}
+                {% if el.place == 20 %}
+                    <br><br>
+                {% endif %}
+                {% if el.place == 20 %}
+                    <button class="button blue">{{ el.place }}</button>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>no tickets</p>
+        {% endif %}
+{% endblock %}
