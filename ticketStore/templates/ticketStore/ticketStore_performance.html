@@ -6,6 +6,12 @@
     <h1>TicketStore <a href="{% url 'ticketStore_hot' %}"><button class="btn btn-warning">Hot tickets</button></a></h1>
     <br>
     <style>
+        .features {
+            color: #dce3fa;
+            margin-top: 10px;
+            text-align: center;
+            width: 50%;
+        }
         .ticketStore-warning {
             float: right;
             background: #dce3fa;
@@ -24,13 +30,8 @@
             text-decoration: none;
             transform: scale(1.05);
         }
-
-        p {
-            color: black;
-            display: block;
-            clear: both;
-            width: 20px;
-            margin: 20px 34%;
+        h1 {
+            color: #dce3fa;
             text-align: left;
         }
         .button {
@@ -38,6 +39,7 @@
             float: left;
             color: black;
             display: block;
+            height: 40px;
             width: 40px;
             text-align: centre;
         }
@@ -49,6 +51,10 @@
             cursor: not-allowed;
         }
 
+        form {
+            width: 400px;
+            margin-top: 40px;
+        }
     </style>
         <div class="alert ticketStore-warning">
             {% with total_tickets=ticketStore|length %}
@@ -65,8 +71,7 @@
         </div>
         {% if tickets %}
             {% for el in tickets %}
-                {% if el.poster_id_id == 1 and el.availability %}
-                    {{performances.id}}
+                {% if el.poster_id_id == 2 and el.availability %}
                     <button class="button">{{ el.place }}</button>
                     <script>
                     </script>
@@ -87,4 +92,17 @@
         {% else %}
             <p>no tickets</p>
         {% endif %}
+        <br> <br>
+        <div class="features">
+            <h1>Форма придбання квитків</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.name }}<br>
+                {{ form.phone }}<br>
+                {{ form.mail }}<br>
+                {{ form.tickets }}<br>
+                <span>{{ error }}</span>
+                <button class="btn btn-success" type="submit"> Замовити </button>
+            </form>
+        </div>
 {% endblock %}

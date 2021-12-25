@@ -1,6 +1,6 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator, DecimalValidator
-
 import performance.models
 
 
@@ -18,3 +18,10 @@ class Ticket(models.Model):
     availability = models.BooleanField('Availability')
     poster_id = models.ForeignKey(performance.models.Poster, on_delete=models.CASCADE)
     tier_id = models.ForeignKey(performance.models.Tier, on_delete=models.CASCADE)
+
+
+class Order(models.Model):
+    name = models.CharField('Name', max_length=64)
+    phone = models.CharField('Phone', max_length=64)
+    mail = models.CharField('Mail', max_length=64)
+    tickets = ArrayField(ArrayField(models.IntegerField('Tickets')))

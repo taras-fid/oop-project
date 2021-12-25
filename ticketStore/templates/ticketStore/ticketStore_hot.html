@@ -25,17 +25,19 @@
     </style>
     <h1>Hot tickets <a href="{% url 'ticketStore_main' %}"><button class="btn btn-warning">TicketStore</button></a></h1>
     <div class="features">
-        {% if performances and () %}
+        {% if performances %}
             {% for el in performances %}
-                <div class="alert-warning">
-                    <h3>{{ el.name }}</h3>
-                    <h5>Author: {{ el.author }}</h5>
-                    <p>Date: {{}}</p>
-                    <p>Description:{{ el.description }}</p>
-                    <p>Duration: {{ el.duration }}</p>
-                    <p>Price: {{ el.price }}</p>
-                    <p><a href="{% url 'ticketStore_performance' el.id %}"><button class="btn btn-warning">Buy tickets</button></a></p>
-                </div>
+                {% if el.id == 1 %}
+                    <div class="alert-warning">
+                        <h3>{{ el.name }}</h3>
+                        <h5>Author: {{ el.author }}</h5>
+                        <p>Date: 30/12/2021</p>
+                        <p>Description:{{ el.description }}</p>
+                        <p>Duration: {{ el.duration }}</p>
+                        <p>Price: {{ el.price }}</p>
+                        <p><a href="{% url 'ticketStore_performance' el.id %}"><button class="btn btn-warning">Buy tickets</button></a></p>
+                    </div>
+                {% endif %}
             {% endfor %}
         {% else %}
             <p>no performances yet</p>
