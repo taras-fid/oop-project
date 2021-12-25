@@ -49,21 +49,7 @@
             font: Helvetica;
             font-size: 25px;
             font-weight: 400;
-            color: #fff
         }
-        .aeu-signature {
-            position: absolute;
-            top: 40px;
-            left: 50%;
-            transform: translate(-50%);
-            font-size: 15px;
-            line-height: 30px;
-            background-color: #665478;
-            padding: 5px 10px;
-            border-radius: 25px;
-        }
-.aeu-signature { font-family: "Quicksand"; }
-.aeu-signature > img { height: 30px; }
     </style>
 </head>
 <body>
@@ -74,11 +60,11 @@
         style="width:40px; height:40px; padding: 5px; position: relative;" align="left">
         <h3 class="float-md-start mb-0">Theattle | {% block header %}{% endblock %}</h3>
         <nav class="nav nav-masthead justify-content-center float-md-end">
-            <a style="color: #6899D3;" class="nav-link" href="{% url 'home' %}">Home</a>
-            <a style="color: #6899D3;" class="nav-link" href="{% url 'perf_home' %}">Performances</a>
-            <a style="color: #6899D3;" class="nav-link" href="#">Posters</a>
-            <a style="color: #6899D3;" class="nav-link" href="{% url 'ticketStore_main' %}">Cart</a>
-            <a style="color: #6899D3;" class="nav-link" href="#">Sign in</a>
+            <a style="color: #6899D3;" class="nav-link" href="{% url 'admin_home' %}">Home</a>
+            <a style="color: #6899D3;" class="nav-link" href="{% url 'home' %}">Back to client</a>
+            <a style="color: #6899D3;" class="nav-link" href="#">Performances</a>
+            <a style="color: #6899D3;" class="nav-link" href="#">Employees</a>
+            <a style="color: #6899D3;" class="nav-link" href="{% url 'req_home' %}">Requisite</a>
         </nav>
     </div>
 </header>
