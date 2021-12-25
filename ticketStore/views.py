@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Ticket
+from performance.models import Performance
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
@@ -12,12 +13,8 @@ from django.views.generic.base import View
 
 
 def ticketStore_main(request):
-    tickets = Ticket.objects.order_by('availability', 'place')
-    # for el in tickets:
-    #     if not int(el.place) % 10:
-    #         i = 0
-    data = {'tickets': tickets}
-    return render(request, 'ticketStore/ticketStore_main.html', context=data)
+    performances = Performance.objects.order_by('-price')
+    return render(request, 'ticketStore/ticketStore_main.html', {'performances': performances})
 
 
 def ticketStore_add(request):
