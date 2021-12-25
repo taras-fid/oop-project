@@ -63,10 +63,13 @@
             {% endwith %}
             <a href="{%  url 'ticketStore_main'  %}"><li><i class="fas fa-store"></i> go to store</li></a>
         </div>
-        {% if tickets%}
+        {% if tickets %}
             {% for el in tickets %}
                 {% if el.poster_id_id == 1 and el.availability %}
+                    {{performances.id}}
                     <button class="button">{{ el.place }}</button>
+                    <script>
+                    </script>
                     {% if el.place == 10 %}
                         <br><br>
                     {% endif %}
