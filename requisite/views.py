@@ -16,4 +16,4 @@ def requisite_history(request):
 
 def requisite_poster_role(request):
     output = RequisitePosterRole.objects.all()
-    return render(request, 'Requisite/requisite_poster_role.html', output)
+    return render(request, 'Requisite/requisite_poster_role.html', {'requisite': output})
