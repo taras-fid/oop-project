@@ -3,4 +3,4 @@ from django.shortcuts import render
 # Create your views here.
 
 def admin(request):
-    return render(request, 'base_admin.html')
+    return render(request, 'admin_main.html')
