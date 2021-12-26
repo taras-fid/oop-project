@@ -17,13 +17,14 @@
             text-align: left;
         }
         h1 {
+            align: centre;
             float: centre;
             color: #dce3fa;
-            text-align: centre;
-            text-align: centre;
         }
     </style>
     <h1>TicketStore <a href="{% url 'ticketStore_hot' %}"><button class="btn btn-warning">Hot tickets</button></a></h1>
+    <a href="{% url 'performance_filter' pk=1 %}"><button>С-ння за ціною</button></a>
+    <a href="{% url 'performance_filter' pk=2 %}"><button>С-ння за тривалістю</button></a>
     <div class="features">
         {% if performances %}
             {% for el in performances %}

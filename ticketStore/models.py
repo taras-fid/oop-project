@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator, DecimalValidator
 import performance.models
+from phone_field import PhoneField
 
 
 class Ticket(models.Model):
@@ -22,6 +22,7 @@ class Ticket(models.Model):
 
 class Order(models.Model):
     name = models.CharField('Name', max_length=64)
-    phone = models.CharField('Phone', max_length=64)
+    phone = PhoneField('Phone')
     mail = models.CharField('Mail', max_length=64)
-    tickets = ArrayField(ArrayField(models.IntegerField('Tickets')))
+    tickets = models.CharField('Tickets', max_length=64)
+

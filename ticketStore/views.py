@@ -56,3 +56,13 @@ def ticketStore_performance(request, pk):
 
 def ticketStore_form(request):
     return render(request, 'ticketStore/ticketStore_main.html')
+
+
+def performance_filter(request, pk):
+    performances = Performance.objects.all()
+    if pk == 1:
+        performances = Performance.objects.order_by('price')
+    if pk == 2:
+        performances = Performance.objects.order_by('duration')
+    return render(request, 'ticketStore/ticketStore_main.html', {'performances': performances})
+
