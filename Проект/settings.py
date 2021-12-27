@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'requisite',
     'ticketStore',
     'phone_field',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Ticket
-from performance.models import Performance, Poster
+from performance.models import *
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
@@ -9,13 +9,16 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.base import View
 from datetime import date
 from .forms import OrderForm
+from .filters import PerformanceFilter, PosterFilter
 
 # Create your views here.
 
 
 def ticketStore_main(request):
-    performances = Performance.objects.order_by('-price')
-    return render(request, 'ticketStore/ticketStore_main.html', {'performances': performances})
+    poster = Poster.objects.order_by('id')
+    myFilter = PosterFilter(request.GET, queryset=poster)
+    poster = myFilter.qs
+    return render(request, 'ticketStore/ticketStore_main.html', {'poster': poster, 'myFilter': myFilter})
 
 
 def ticketStore_add(request):
@@ -59,10 +62,20 @@ def ticketStore_form(request):
 
 
 def performance_filter(request, pk):
-    performances = Performance.objects.all()
+    poster = Poster.objects.all()
     if pk == 1:
-        performances = Performance.objects.order_by('price')
+        poster = poster.order_by('performance_id__price')
     if pk == 2:
-        performances = Performance.objects.order_by('duration')
-    return render(request, 'ticketStore/ticketStore_main.html', {'performances': performances})
+        poster = poster.order_by('performance_id__duration')
+    if pk == 3:
+        poster = poster.order_by('date')
+    myFilter = PosterFilter(request.GET, queryset=poster)
+    poster = myFilter.qs
+    return render(request, 'ticketStore/ticketStore_main.html', {'poster': poster, 'myFilter': myFilter})
 
+
+def requisite(request):
+    performances = Performance.objects.all()
+    myFilter = PerformanceFilter(request.GET, queryset=performances)
+    performances = myFilter.qs
+    return render(request, 'ticketStore/ticketStore_main.html', {'performances': performances, 'myFilter': myFilter})

@@ -24,7 +24,7 @@ class OrderForm(ModelForm):
                 'placeholder': 'Поштова адреса'
             }),
             'tickets': TextInput(attrs={
-                'class': 'form-control',
+                'class': 'custom-checkbox',
                 'placeholder': 'Білети'
             }),
         }
