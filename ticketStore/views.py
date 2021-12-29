@@ -4,7 +4,6 @@ from .models import Ticket
 from performance.models import *
 from django.urls import reverse_lazy
 from django.db.models import Q
-from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.base import View
 from datetime import date
@@ -46,13 +45,8 @@ def ticketStore_performance(request, pk):
             return redirect('ticketStore_main')
         else:
             error = 'Замовлення заповненно некоректно'
-
     form = OrderForm()
-    # performances = Performance.objects
     tickets = Ticket.objects.order_by('place')
-    # for el in tickets:
-    #     if not int(el.place) % 10:
-    #         i = 0
     return render(request, 'ticketStore/ticketStore_performance.html', {'tickets': tickets, 'form': form,
                                                                         'error': error})
 
