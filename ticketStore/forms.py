@@ -24,6 +24,6 @@ class OrderForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Поштова адреса'
             }),
-            #'date': date,
+            'date': date,
             'tickets': tickets
         }

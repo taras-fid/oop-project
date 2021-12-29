@@ -47,8 +47,8 @@
             background-color: red;
         }
         .btn-not-availability {
+            pointer-events: none;
             opacity: 0.6;
-            cursor: not-allowed;
         }
 
         form {
@@ -76,6 +76,15 @@
               background-size: 50% 50%;
         }
     </style>
+        <div class="alert ticketStore-warning">
+            {% if not tickets_order %}
+                <p>Cart is empty</p>
+            {% endif %}
+            {% for ticket in tickets_order %}
+                {{ ticket }}
+            {% endfor %}
+            <a href="{% url 'ticketStore_form' %}"><button class="btn btn-warning">Order</button></a>
+        </div>
         {% if tickets %}
             {% for el in tickets %}
                 {% if el.poster_id_id == pk %}

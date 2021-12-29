@@ -11,6 +11,8 @@ from .forms import OrderForm
 from .filters import PerformanceFilter, PosterFilter
 
 # Create your views here.
+global ticket_order
+tickets_order = []
 
 
 def ticketStore_main(request):
@@ -37,33 +39,34 @@ def ticketStore_hot(request):
 
 
 def ticketStore_performance(request, pk=None):
-    tickets = Ticket.objects.order_by('place')
-    return render(request, 'ticketStore/ticketStore_performance.html', {'tickets': tickets, 'pk': pk})
+    tickets_const = Ticket.objects.order_by('place')
+    return render(request, 'ticketStore/ticketStore_performance.html', {'tickets': tickets_const, 'pk': pk,
+                                                                        'tickets_order': tickets_order})
 
 
 def ticketStore_order(request, pk, pkt=None):
-    tickets = Ticket.objects.order_by('place')
+    tickets_const = Ticket.objects.order_by('place')
+    for el in tickets_const:
+        if el.place == pkt and el.poster_id_id == pk:
+            tickets_const.filter(place=pkt, poster_id_id=pk).update(availability=0)
+            if not [pk, pkt] in tickets_order:
+                tickets_order.append([pk, pkt])
+    return render(request, 'ticketStore/ticketStore_order.html', {'tickets': tickets_const, 'pk': pk, 'pkt': pkt,
+                                                                  'tickets_order': tickets_order})
+
+
+def ticketStore_form(request):
     error = ''
-    for el in tickets:
-        if el.place == pkt:
-            el.availability = 0
-            tickets = tickets
     if request.method == 'POST':
         form = OrderForm(request.POST)
-        tickets_order = []
-        # for ticket in tickets
         if form.is_valid():
             form.save()
             return redirect('ticketStore_main')
         else:
             error = 'Замовлення заповненно некоректно'
     form = OrderForm()
-    return render(request, 'ticketStore/ticketStore_order.html', {'tickets': tickets, 'form': form, 'error': error,
-                                                                  'pk': pk, 'pkt': pkt})
-
-
-def ticketStore_form(request):
-    return render(request, 'ticketStore/ticketStore_main.html')
+    return render(request, 'ticketStore/ticketStore_form.html', {'form': form, 'error': error,
+                                                                 'tickets_order': tickets_order})
 
 
 def performance_filter(request, pk):

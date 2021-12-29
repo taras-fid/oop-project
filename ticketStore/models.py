@@ -24,6 +24,6 @@ class Order(models.Model):
     name = models.CharField('Name', max_length=64)
     phone = PhoneField('Phone')
     mail = models.CharField('Mail', max_length=64)
-    # date = models.DateField('Date')
+    date = models.DateField('Date')
     tickets = models.CharField('Tickets', max_length=64)
 
