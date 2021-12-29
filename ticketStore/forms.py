@@ -9,6 +9,7 @@ class OrderForm(ModelForm):
         model = Order
         today = date.today()
         date = today.strftime("%Y/%m/%d")
+        tickets = []
         fields = ['name', 'phone', 'mail', 'tickets']
         widgets = {
             'name': TextInput(attrs={
@@ -23,8 +24,6 @@ class OrderForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Поштова адреса'
             }),
-            'tickets': TextInput(attrs={
-                'class': 'custom-checkbox',
-                'placeholder': 'Білети'
-            }),
+            #'date': date,
+            'tickets': tickets
         }

@@ -43,11 +43,11 @@
             width: 40px;
             text-align: centre;
         }
-        .button:focus {
-            background-color: red;
-        }
         .btn-not-availability {
+            pointer-events: none;
             opacity: 0.6;
+        }
+        .wrapper {
             cursor: not-allowed;
         }
 
@@ -72,10 +72,23 @@
               border-radius: 0.25em;
               margin-right: 0.5em;
               background-repeat: no-repeat;
-              background-position: center center;
-              background-size: 50% 50%;
+              background-position: center;
+              background-size: 50%;
         }
     </style>
+        <div class="alert ticketStore-warning">
+            {% with total_tickets=ticketStore|length %}
+            {% if ticketStore|length > 0 %}
+            In ticketStore:
+            <a href=" {% url 'ticketStore:ticketStore_detail' %} ">
+                {{ total_tickets }} tickets, {{ ticketStore.get_total_price }} $
+            </a>
+            {% else %}
+            <p>ticketStore empty</p>
+            {% endif %}
+            {% endwith %}
+            <a href="{%  url 'ticketStore_main'  %}"><li><i class="fas fa-store"></i> go to store</li></a>
+        </div>
         {% if tickets %}
             {% for el in tickets %}
                 {% if el.poster_id_id == pk %}

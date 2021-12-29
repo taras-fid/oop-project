@@ -36,19 +36,30 @@ def ticketStore_hot(request):
     return render(request, 'ticketStore/ticketStore_hot.html', {'performances': performances, 'poster': poster, 'date': d})
 
 
-def ticketStore_performance(request, pk):
+def ticketStore_performance(request, pk=None):
+    tickets = Ticket.objects.order_by('place')
+    return render(request, 'ticketStore/ticketStore_performance.html', {'tickets': tickets, 'pk': pk})
+
+
+def ticketStore_order(request, pk, pkt=None):
+    tickets = Ticket.objects.order_by('place')
     error = ''
+    for el in tickets:
+        if el.place == pkt:
+            el.availability = 0
+            tickets = tickets
     if request.method == 'POST':
         form = OrderForm(request.POST)
+        tickets_order = []
+        # for ticket in tickets
         if form.is_valid():
             form.save()
             return redirect('ticketStore_main')
         else:
             error = 'Замовлення заповненно некоректно'
     form = OrderForm()
-    tickets = Ticket.objects.order_by('place')
-    return render(request, 'ticketStore/ticketStore_performance.html', {'tickets': tickets, 'form': form,
-                                                                        'error': error})
+    return render(request, 'ticketStore/ticketStore_order.html', {'tickets': tickets, 'form': form, 'error': error,
+                                                                  'pk': pk, 'pkt': pkt})
 
 
 def ticketStore_form(request):
@@ -73,3 +84,4 @@ def requisite(request):
     myFilter = PerformanceFilter(request.GET, queryset=performances)
     performances = myFilter.qs
     return render(request, 'ticketStore/ticketStore_main.html', {'performances': performances, 'myFilter': myFilter})
+
