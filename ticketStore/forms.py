@@ -7,10 +7,9 @@ from phone_field import PhoneField
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        today = date.today()
-        date = today.strftime("%Y/%m/%d")
-        tickets = []
-        fields = ['name', 'phone', 'mail', 'tickets']
+        # today = date.today()
+        # date = today.strftime("%d/%m/%Y")
+        fields = ['name', 'phone', 'mail']
         widgets = {
             'name': TextInput(attrs={
                 'class': 'form-control',
@@ -24,6 +23,4 @@ class OrderForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Поштова адреса'
             }),
-            'date': date,
-            'tickets': tickets
         }

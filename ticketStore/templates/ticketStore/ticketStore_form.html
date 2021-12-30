@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1>TicketStore <a href="{% url 'ticketStore_hot' %}"><button class="btn btn-warning">Hot tickets</button></a></h1>
+    <a href="{% url 'ticketStore_main' pk='cancel' %}"><button class="btn btn-warning">Cancel order</button></a></h1>
     <br>
     <style>
         .features {
@@ -31,6 +32,10 @@
             transform: scale(1.05);
         }
         h1 {
+            color: #dce3fa;
+            text-align: left;
+        }
+        h2 {
             color: #dce3fa;
             text-align: left;
         }
@@ -82,7 +87,7 @@
                 <p>Cart is empty</p>
             {% endif %}
             {% for ticket in tickets_order %}
-                <h1>{{ ticket }}<a href="{% url 'ticketStore_form' %}"><button class="btn btn-warning">Delete</button></a></h1>
+                <h2>{{ ticket }}</h2>
             {% endfor %}
             <h1>Форма придбання квитків</h1>
             <form method="post">

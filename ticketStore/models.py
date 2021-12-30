@@ -24,6 +24,19 @@ class Order(models.Model):
     name = models.CharField('Name', max_length=64)
     phone = PhoneField('Phone')
     mail = models.CharField('Mail', max_length=64)
-    date = models.DateField('Date')
-    tickets = models.CharField('Tickets', max_length=64)
 
+
+class Ticket_ordered(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    price = models.DecimalField('Ticket price', decimal_places=2, max_digits=10,
+                                validators=[
+                                    MinValueValidator(0.01),
+                                ]
+                                )
+    place = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(1)
+        ]
+    )
+    poster_id = models.ForeignKey(performance.models.Poster, on_delete=models.CASCADE)
+    tier_id = models.IntegerField()

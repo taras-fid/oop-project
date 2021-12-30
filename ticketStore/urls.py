@@ -8,4 +8,5 @@ urlpatterns = [
     path('order/<int:pk>/<int:pkt>', views.ticketStore_order, name='ticketStore_order'),
     path('form', views.ticketStore_form, name='ticketStore_form'),
     path('filter/<int:pk>', views.performance_filter, name='performance_filter'),
+    path('<str:pk>', views.ticketStore_main, name='ticketStore_main'),
 ]

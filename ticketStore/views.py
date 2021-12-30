@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Ticket
+from .models import Ticket, Ticket_ordered
 from performance.models import *
 from django.urls import reverse_lazy
 from django.db.models import Q
@@ -9,13 +9,26 @@ from django.views.generic.base import View
 from datetime import date
 from .forms import OrderForm
 from .filters import PerformanceFilter, PosterFilter
+import numpy as np
 
 # Create your views here.
 global ticket_order
 tickets_order = []
 
 
-def ticketStore_main(request):
+def ticketStore_main(request, pk=None):
+    if pk == 'cancel':
+        tickets_const = Ticket.objects.order_by('place')
+        numpy_array = np.array(tickets_order)
+        transpose = numpy_array.T
+        tickets_order_output = transpose.tolist()
+        for ticket in tickets_const:
+            for el in tickets_order_output:
+                for poster_el in tickets_order_output[0]:
+                    for place_el in tickets_order_output[1]:
+                        tickets_const.filter(place=place_el, poster_id_id=poster_el).update(availability=1)
+        tickets_order.clear()
+
     poster = Poster.objects.order_by('id')
     myFilter = PosterFilter(request.GET, queryset=poster)
     poster = myFilter.qs
@@ -35,7 +48,8 @@ def ticketStore_hot(request):
     d = today.strftime("%Y/%m/%d")
     performances = Performance.objects.order_by('-price')
     poster = Poster.objects.order_by('id')
-    return render(request, 'ticketStore/ticketStore_hot.html', {'performances': performances, 'poster': poster, 'date': d})
+    return render(request, 'ticketStore/ticketStore_hot.html',
+                  {'performances': performances, 'poster': poster, 'date': d})
 
 
 def ticketStore_performance(request, pk=None):
@@ -57,13 +71,27 @@ def ticketStore_order(request, pk, pkt=None):
 
 def ticketStore_form(request):
     error = ''
+    tickets_const = Ticket.objects.order_by('place')
+    numpy_array = np.array(tickets_order)
+    transpose = numpy_array.T
+    tickets_order_output = transpose.tolist()
     if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('ticketStore_main')
-        else:
-            error = 'Замовлення заповненно некоректно'
+        for el in tickets_order_output:
+            form = OrderForm(request.POST)
+            for poster_el in tickets_order_output[0]:
+                for place_el in tickets_order_output[1]:
+                    Ticket_ordered.objects.create(order=None, place=place_el,
+                                                  poster_id_id=tickets_const.get(place=place_el,
+                                                                                 poster_id_id=poster_el).poster_id_id,
+                                                  price=tickets_const.get(place=place_el,
+                                                                          poster_id_id=poster_el).price,
+                                                  tier_id=tickets_const.get(place=place_el,
+                                                                            poster_id_id=poster_el).tier_id_id)
+            if form.is_valid():
+                form.save()
+                return redirect('ticketStore_main')
+            else:
+                error = 'Замовлення заповненно некоректно'
     form = OrderForm()
     return render(request, 'ticketStore/ticketStore_form.html', {'form': form, 'error': error,
                                                                  'tickets_order': tickets_order})
@@ -87,4 +115,3 @@ def requisite(request):
     myFilter = PerformanceFilter(request.GET, queryset=performances)
     performances = myFilter.qs
     return render(request, 'ticketStore/ticketStore_main.html', {'performances': performances, 'myFilter': myFilter})
-
