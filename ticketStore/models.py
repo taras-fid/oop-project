@@ -15,6 +15,6 @@ class Ticket(models.Model):
             MinValueValidator(1)
         ]
     )
-    availability = models.BooleanField('Availability')
+    availability = models.BooleanField('Avail7ability')
     poster_id = models.ForeignKey(performance.models.Poster, on_delete=models.CASCADE)
     tier_id = models.ForeignKey(performance.models.Tier, on_delete=models.CASCADE)
