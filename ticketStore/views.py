@@ -6,10 +6,10 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.base import View
-from datetime import date
 from .forms import OrderForm
 from .filters import PerformanceFilter, PosterFilter
 import numpy as np
+from datetime import date
 
 # Create your views here.
 global ticket_order
@@ -72,29 +72,34 @@ def ticketStore_order(request, pk, pkt=None):
 def ticketStore_form(request):
     error = ''
     order_price = 0
-    tickets_const = Ticket.objects.order_by('place')
+    tickets_const = Ticket.objects.all()
     numpy_array = np.array(tickets_order)
     transpose = numpy_array.T
     tickets_order_output = transpose.tolist()
-    # for poster_el in range(len(tickets_order_output[0])):
-    #     order_price += tickets_const.get(poster_id_id=poster_el, place=1).price
+    today = date.today()
+    date1 = today.strftime("%Y-%m-%d")
+    for i in range(len(tickets_order_output[0])):
+        order_price += tickets_const.get(poster_id_id=tickets_order_output[0][i], place=1).price
     if request.method == 'POST':
-        for el in tickets_order_output:
-            form = OrderForm(request.POST)
-            for poster_el in tickets_order_output[0]:
-                for place_el in tickets_order_output[1]:
-                    Ticket_ordered.objects.create(
-                        order=None,
-                        place=place_el,
-                        poster_id_id=tickets_const.get(place=place_el, poster_id_id=poster_el).poster_id_id,
-                        price=tickets_const.get(place=place_el, poster_id_id=poster_el).price,
-                        tier_id=tickets_const.get(place=place_el, poster_id_id=poster_el).tier_id_id)
-            # form.price = order_price
-            if form.is_valid():
-                form.save()
-                return redirect('ticketStore_main')
-            else:
-                error = 'Замовлення заповненно некоректно'
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            orders = Order.objects.order_by('-id')
+            order = orders[0]
+            Order.objects.filter(id=order.id).update(price=order_price)
+            Order.objects.filter(id=order.id).update(date=date1)
+            # [[1,1,1], [38,39,40]]
+            for i in range(len(tickets_order_output[1])):
+                Ticket_ordered.objects.create(
+                    order=order,
+                    place=tickets_order_output[1][i],
+                    poster_id_id=tickets_const.get(place=tickets_order_output[1][i], poster_id_id=tickets_order_output[0][i]).poster_id_id,
+                    price=tickets_const.get(place=tickets_order_output[1][i], poster_id_id=tickets_order_output[0][i]).price,
+                    tier_id=tickets_const.get(place=tickets_order_output[1][i], poster_id_id=tickets_order_output[0][i]).tier_id_id)
+            tickets_order.clear()
+            return redirect('ticketStore_main')
+        else:
+            error = 'Замовлення заповненно некоректно'
     form = OrderForm()
     return render(request, 'ticketStore/ticketStore_form.html', {'form': form, 'error': error,
                                                                  'tickets_order': tickets_order})

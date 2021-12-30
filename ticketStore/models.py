@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, RegexValidator, DecimalVal
 import performance.models
 from phone_field import PhoneField
 from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
+from Проект import settings
 
 
 class Ticket(models.Model):
@@ -32,9 +33,19 @@ class Order(models.Model):
                                     MinValueValidator(0.01),
                                 ]
                                 )
-    # cc_number = CardNumberField('card number', default=7777777777777777)
-    # cc_expiry = CardExpiryField('expiration date', default=12-21)
-    # cc_code = SecurityCodeField('security code', default=111)
+    cc_number = models.DecimalField('card number', decimal_places=0, max_digits=16,
+                                    validators=[RegexValidator(regex='[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+'
+                                                                     '[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]')])
+    cc_expiry = models.CharField('expiration date', max_length=5,
+                                 validators=[RegexValidator(regex='[0-9]+[0-9]+/[0-9]+[0-9]')])
+    cc_code = models.DecimalField('security code', decimal_places=0, max_digits=3,
+                                  validators=[RegexValidator(regex='[1-9]+[0-9]+[0-9]')])
+    # cc_number = models.DecimalField('card number', decimal_places=0, max_digits=16,
+    #                                 validators=[RegexValidator(regex='^([0-9]{16}])$')])
+    # cc_expiry = models.CharField('expiration date', max_length=5,
+    #                              validators=[RegexValidator(regex='^(0[1-9]|1[0-2])\/-?([0-9]{2})$')])
+    # cc_code = models.DecimalField('security code', decimal_places=0, max_digits=3,
+    #                               validators=[RegexValidator(regex='^([0-9]{3}])$')])
 
 
 class Ticket_ordered(models.Model):

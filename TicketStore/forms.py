@@ -1,3 +1,4 @@
+from django import forms
 from .models import Order
 from django.forms import ModelForm, TextInput, DateInput
 from datetime import date
@@ -8,10 +9,7 @@ from creditcards.forms import CardNumberField, CardExpiryField, SecurityCodeFiel
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        # today = date.today()
-        # date = today.strftime("%Y-%m-%d")
-        fields = ['name', 'phone', 'mail']
-        # Order.date = date
+        fields = ['name', 'phone', 'mail', 'cc_number', 'cc_expiry', 'cc_code']
         widgets = {
             'name': TextInput(attrs={
                 'class': 'form-control',
@@ -25,16 +23,16 @@ class OrderForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Поштова адреса'
             }),
-            # 'cc_number': TextInput(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'Номер картки'
-            # }),
-            # 'cc_expiry': TextInput(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'Дата сроку картки'
-            # }),
-            # 'cc_code': TextInput(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'CVC код'
-            # }),
+            'cc_number': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Номер картки'
+            }),
+            'cc_expiry': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Дата сроку картки(12/21)'
+            }),
+            'cc_code': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'CVC код'
+            }),
         }
